@@ -1,7 +1,30 @@
 require "active_record/column_where_chain/version"
-
 module ActiveRecord
-  module ColumnWhereChain
-    # Your code goes here...
+  class ColumnWhereChain
+
+    def initialize(scope, column)
+      @scope = scope
+      @column = column
+    end
+
+    def like(value)
+      @scope.where("#{@column} like ?", value)
+    end
+
+    module QueryMethods
+
+      def where(opts = :chain, *rest)
+        if opts == :chain
+          WhereChain.new(spawn)
+        elsif opts.is_a?(Symbol) && rest.empty?
+          ColumnWhereChain.new(spawn, opts)
+        elsif opts.blank?
+          self
+        else
+          spawn.where!(opts, *rest)
+        end
+      end
+    end
+    ::ActiveRecord::Relation.send :include, ActiveRecord::ColumnWhereChain::QueryMethods
   end
 end
