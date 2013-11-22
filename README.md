@@ -1,6 +1,6 @@
 # ActiveRecord::ColumnWhereChain
 
-TODO: Write a gem description
+Adds column based query chains to ActiveRecord
 
 ## Installation
 
@@ -18,7 +18,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Start a where chain by passing in your column name to where as a symbol
+
+    MyModel.where(:my_column)
+
+Then call methods the query chain to get back to a relation
+
+    MyModel.where(:my_column).like("%SomeValue%") #=> SELECT * from my_models where my_column like '%SomeValue'
+    MyModel.where(:my_column).gt(10) #=> SELECT * from my_models where my_column > 10
 
 ## Contributing
 
