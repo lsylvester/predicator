@@ -7,8 +7,10 @@ module ActiveRecord
       @column = @scope.arel_table[column]
     end
 
-    def like(value)
-      @scope.where(@column.matches(value))
+    Arel::Predications.instance_methods.each do |method|
+      define_method method do |value|
+        @scope.where(@column.send(method, value))
+      end
     end
 
     module QueryMethods
