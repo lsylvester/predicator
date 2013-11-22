@@ -4,11 +4,11 @@ module ActiveRecord
 
     def initialize(scope, column)
       @scope = scope
-      @column = column
+      @column = @scope.arel_table[column]
     end
 
     def like(value)
-      @scope.where("#{@column} like ?", value)
+      @scope.where(@column.matches(value))
     end
 
     module QueryMethods
