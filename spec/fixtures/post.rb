@@ -1,10 +1,7 @@
-ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS 'posts'")
-ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS 'comments'")
-
-ActiveRecord::Base.connection.create_table(:posts) do |t|
+ActiveRecord::Base.connection.create_table(:posts, force: true) do |t|
   t.string :title
 end
-ActiveRecord::Base.connection.create_table(:comments) do |t|
+ActiveRecord::Base.connection.create_table(:comments, force: true) do |t|
   t.string :message
 end
 
