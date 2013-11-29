@@ -25,7 +25,7 @@ module ActiveRecord
         if opts == :chain
           WhereChain.new(spawn)
         elsif opts.is_a?(Symbol) && rest.empty?
-          ColumnWhereChain.new(spawn, opts)
+          column_where_chain_class.new(spawn, opts)
         elsif opts.blank?
           self
         else
@@ -33,6 +33,18 @@ module ActiveRecord
         end
       end
     end
+
+    module Predicate
+      def column_where_chain_class
+        @column_where_chain_class ||= Class.new(ColumnWhereChain)
+      end
+
+      def predicate name, &block
+        column_where_chain_class.predicate name, &block
+      end
+    end
     ::ActiveRecord::Relation.send :include, ActiveRecord::ColumnWhereChain::QueryMethods
+    ::ActiveRecord::Base.send :extend, ActiveRecord::ColumnWhereChain::Predicate
+
   end
 end
