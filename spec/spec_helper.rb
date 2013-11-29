@@ -8,3 +8,5 @@ ActiveRecord::Base.establish_connection(
 )
 
 require 'fixtures/post'
+require 'fixtures/comment'
+
