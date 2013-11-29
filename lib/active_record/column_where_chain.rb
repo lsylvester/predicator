@@ -7,9 +7,15 @@ module ActiveRecord
       @column = @scope.arel_table[column]
     end
 
+    def self.predicate name, &block
+      define_method(name) do |value|
+        @scope.where(block.call(@column, value))
+      end
+    end
+
     Arel::Predications.instance_methods.each do |method|
-      define_method method do |value|
-        @scope.where(@column.send(method, value))
+      predicate method do |column, value|
+        column.send(method, value)
       end
     end
 
