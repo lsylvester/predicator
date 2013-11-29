@@ -7,3 +7,6 @@ class Post < ActiveRecord::Base
     column.matches("#{value}%")
   end
 end
+
+Post.create(title: "Hello")
+Post.create(title: "World")
