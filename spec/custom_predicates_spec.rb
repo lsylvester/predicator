@@ -1,12 +1,6 @@
 require 'spec_helper'
 
-describe "like" do
-
-  it "should check the database records" do
-    Post.count.should == 2
-    Post.where(:title).matches("%ello%").count.should == 1
-  end
-
+describe "Custom Predicates" do
   it "should return records that start with string" do
     Post.where(:title).starts_with("Wor").count.should == 1
   end
