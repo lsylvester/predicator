@@ -36,7 +36,8 @@ module ActiveRecord
 
     module Predicate
       def column_where_chain_class
-        @column_where_chain_class ||= Class.new(ColumnWhereChain)
+        return ColumnWhereChain if self == ActiveRecord::Base
+        @column_where_chain_class ||=  Class.new(superclass.column_where_chain_class)
       end
 
       delegate :predicate, to: :column_where_chain_class
