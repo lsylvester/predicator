@@ -39,9 +39,7 @@ module ActiveRecord
         @column_where_chain_class ||= Class.new(ColumnWhereChain)
       end
 
-      def predicate name, &block
-        column_where_chain_class.predicate name, &block
-      end
+      delegate :predicate, to: :column_where_chain_class
     end
     ::ActiveRecord::Relation.send :include, ActiveRecord::ColumnWhereChain::QueryMethods
     ::ActiveRecord::Base.send :extend, ActiveRecord::ColumnWhereChain::Predicate
