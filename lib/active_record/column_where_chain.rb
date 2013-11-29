@@ -8,8 +8,8 @@ module ActiveRecord
     end
 
     def self.predicate name, &block
-      define_method(name) do |value|
-        @scope.where(block.call(@column, value))
+      define_method(name) do |*values|
+        @scope.where(block.call(@column, *values))
       end
     end
 
