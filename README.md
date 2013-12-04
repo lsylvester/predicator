@@ -23,8 +23,6 @@ ActiveRecord::ColumnQueryChain exposes Arel Predicates to the Active Record quer
     MyModel.where(:my_column).matches("%SomeValue%") #=> SELECT * from my_models where my_column like '%SomeValue'
     MyModel.where(:my_column).gt(10) #=> SELECT * from my_models where my_column > 10
 
-
-
 Or you can define your own predicates.
 
     class MyModel < ActiveRecord::Base

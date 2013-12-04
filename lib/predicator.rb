@@ -1,5 +1,5 @@
-require "active_record/column_where_chain/version"
-module ActiveRecord
+require "predicator/version"
+module Predicator
   class ColumnWhereChain
 
     def initialize(scope, column)
@@ -42,8 +42,7 @@ module ActiveRecord
 
       delegate :predicate, to: :column_where_chain_class
     end
-    ::ActiveRecord::Relation.send :include, ActiveRecord::ColumnWhereChain::QueryMethods
-    ::ActiveRecord::Base.send :extend, ActiveRecord::ColumnWhereChain::Predicate
-
+    ::ActiveRecord::Relation.send :include, QueryMethods
+    ::ActiveRecord::Base.send :extend, Predicate
   end
 end

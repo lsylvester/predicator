@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'active_record/column_where_chain/version'
+require 'predicator/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "active_record-column_where_chain"
-  spec.version       = ActiveRecord::ColumnWhereChain::VERSION
+  spec.name          = "predicator"
+  spec.version       = Predicator::VERSION
   spec.authors       = ["lsylvester"]
   spec.email         = ["lachlan.sylvester@hypothetical.com.au"]
-  spec.description   = %q{Add Column base where chains to ActiveRecord}
-  spec.summary       = %q{Add Column base where chains to ActiveRecord}
+  spec.description   = %q{Add predicate support to the Active Record query API}
+  spec.summary       = %q{Add predicate support to the Active Record query API}
   spec.homepage      = ""
   spec.license       = "MIT"
 
