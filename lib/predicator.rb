@@ -9,11 +9,10 @@ module Predicator
     attr_reader :column
 
     def arel_column
-      @arel_column ||= if column.to_s.include?('.')
-        t, c = column.split('.')
-        Arel::Table.new(t)[c]
-      else
+      @arel_column ||= if column.is_a?(Symbol)
         @scope.arel_table[column]
+      else
+        Arel::Nodes::SqlLiteral.new(column)
       end
     end
 
