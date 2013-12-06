@@ -1,4 +1,8 @@
 require "predicator/version"
+require "arel"
+require 'active_record'
+require "active_support/all"
+
 module Predicator
   class ColumnWhereChain
 
