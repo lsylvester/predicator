@@ -4,6 +4,7 @@ ActiveRecord::Base.connection.create_table(:posts, force: true) do |t|
 end
 
 class Post < ActiveRecord::Base
+  has_many :comments
   predicate :starts_with do |column, value|
     column.matches("#{value}%")
   end

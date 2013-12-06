@@ -4,12 +4,22 @@ module Predicator
 
     def initialize(scope, column)
       @scope = scope
-      @column = @scope.arel_table[column]
+      @column = column
+    end
+    attr_reader :column
+
+    def arel_column
+      @arel_column ||= if column.to_s.include?('.')
+        t, c = column.split('.')
+        Arel::Table.new(t)[c]
+      else
+        @scope.arel_table[column]
+      end
     end
 
     def self.predicate name, &block
       define_method(name) do |*values|
-        @scope.where(block.call(@column, *values))
+        @scope.where(block.call(arel_column, *values))
       end
     end
 
@@ -19,12 +29,16 @@ module Predicator
       end
     end
 
+    def method_missing *args, &block
+      @scope.where!(column).send(*args, &block)
+    end
+
     module QueryMethods
 
       def where(opts = :chain, *rest)
         if opts == :chain
           WhereChain.new(spawn)
-        elsif opts.is_a?(Symbol) && rest.empty?
+        elsif !opts.is_a?(column_where_chain_class) && rest.empty?
           column_where_chain_class.new(spawn, opts)
         elsif opts.blank?
           self
